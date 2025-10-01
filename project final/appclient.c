@@ -35,9 +35,9 @@ void Profil();
 void Solde();
     void afficherSolde();
     void deposerArgent();
-void consultationProduits(){};
-    void afficherDetailsProduit(){};
-    void afficherCatalogue(){};
+void consultationProduits();
+    void afficherDetailsProduit();
+    void afficherCatalogue();
 
 void Effectuer(){};
 
@@ -110,14 +110,23 @@ switch (choix) {
     } while (choix != 0);
 }
 void Creation() {
+    char nome[50];
+    
     printf("\n              LA CREATION DE COMPTE         \n ");
     client.solde = 0.0;
     printf("\nEntrez le nom : ");
-    scanf("%s", client.nom);
+    scanf(" %[^\n]", client.nom);
     printf("Entrez le prenom : ");
     scanf("%s", client.prenom);
+    int j=0;
+    for(int i=0;client.nom[i]!='\0';i++){
+        if(client.nom[i]!=' ')
+         nome[j++]=client.nom[i];
+
+    } 
+    nome[j]='\0';
     
-    strcpy(client.email, client.nom);
+    strcpy(client.email,nome);
     strcat(client.email, ".");
     strcat(client.email, client.prenom);
     strcat(client.email, "@gmail.com");
@@ -194,7 +203,50 @@ void deposerArgent() {
         afficherSolde();
     }
 }
+void consultationProduits(){
+    int choix;
+    do {
+        afficherCatalogue();
+        printf("\nEntrez le numero du produit pour voir les details (0 pour retourner au menu): ");
+        scanf("%d", &choix);
 
+        if (choix == 0) {
+            printf("Retour au menu principal.\n");
+            break;
+        }
+        afficherDetailsProduit(choix);
+
+        printf("\nVoulez-vous consulter un autre produit ? (1: Oui, 0: Non): ");
+        scanf("%d", &choix);
+
+    } while (choix == 1);
+}
+
+void afficherCatalogue() {
+    printf("\n===== Catalogue des produits =====\n");
+    for (int i = 0; i < 10 ; i++) {
+        printf("%d. %s - %.2f MAD - Stock: %d\n", catalog[i].idProduit, catalog[i].nom, catalog[i].prix, catalog[i].stock);
+    }
+}
+
+void afficherDetailsProduit() {
+    int trouve = 0;
+    for (int i = 0; i < 10 ; i++) {
+        if (catalog[i].idProduit == 0) {
+            trouve = 1;
+            printf("\n----------- Details du produit -----------\n");
+            printf("Nom               : %s\n", catalog[i].nom);
+            printf("Categorie         : %s\n", catalog[i].categorie);
+            printf("Prix              : %.2f MAD\n", catalog[i].prix);
+            printf("Stock             : %d\n", catalog[i].stock);
+            printf("Description       : %s\n", catalog[i].description);
+            break;
+        }
+    }
+    if (trouve==0) {
+        printf("Produit introuvable.\n");
+    }
+}
 
 
 
