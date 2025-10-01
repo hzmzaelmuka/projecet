@@ -19,14 +19,22 @@ typedef struct {
     int stock;
     char description[101];
 } Produit;
-
+Produit catalog[10] = {
+    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
+    {1, "Ordinateur Portable", "Electronique",500 , 5, "Un ordinateur portable performant pour le travail et les jeux."},
+    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
+    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
+    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
+    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
+    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
+};
 void Profil();
     void Creation();
     void AfficherProfil();
     void Modification();
-void Solde(){};
-    void afficherSolde(){};
-    void deposerArgent(){};
+void Solde();
+    void afficherSolde();
+    void deposerArgent();
 void consultationProduits(){};
     void afficherDetailsProduit(){};
     void afficherCatalogue(){};
@@ -70,8 +78,7 @@ void Profil() {
         printf("0. Quitter vers l accueil\n");
         printf("Entrez votre choix : ");
         scanf("%d", &choix);
-
-        switch (choix) {
+switch (choix) {
             case 1:
                 if (cmpClient == 1) {
                     printf("Le compte existe deja.\n");
@@ -132,8 +139,62 @@ void Modification() {
     printf("\n              LA MODIFICATION DE COMPT       \n ");
     char nome[50], prenome[50];
     printf("\nEntrez le nouveau nom : ");
-    scanf("%s", nome);
+    scanf(" %[^\n]", nome);
     printf("Entrez le nouveau prenom : ");
     scanf("%s", prenome);
     printf("Profil mis a jour avec succes \n");
 }
+void Solde(){ 
+    int choix ; 
+     if (cmpClient== 0){
+        printf("Veuillez creer un compte d abord.\n");
+    } else { 
+    do {
+        printf("\n===  GESTION DU SOLDE VIRTUEL ===\n");
+        printf("1. Consulter le solde\n");
+        printf("2. Deposer de l argent\n");
+        printf("0. Fermez cette page \n");
+        printf("Votre choix : ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:
+                afficherSolde();
+            break;
+            case 2:
+                deposerArgent();
+                break;
+            case 0:
+                printf(" Au revoir !\n");
+                break;
+            default:
+                printf(" Choix invalide, veuillez réessayer.\n");
+        }
+
+    } while (choix != 0);
+}
+}
+
+void afficherSolde() {
+if (cmpClient == 0) {
+ printf("Le compte n existe pas. Veuillez en creer un d abord.\n");
+ } else {
+ printf("\n Votre solde actuel est : %.2f DH\n", client.solde);
+}}
+void deposerArgent() {
+    float montant;
+    printf("\n  Entrez le montant a deposer : ");
+    scanf("%f", &montant);
+
+    if (montant <= 0) {
+        printf(" Montant invalide ! Il doit être superieur a 0.\n");
+    } else {
+        client.solde += montant;
+        printf(" %.2f MAD ont ete deposes avec succes !\n", montant);
+        afficherSolde();
+    }
+}
+
+
+
+
