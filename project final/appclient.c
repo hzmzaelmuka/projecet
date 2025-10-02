@@ -27,10 +27,10 @@ typedef struct
 } Produit;
 
 Produit catalog[MAX_PRODUITS] = {
-    {4, "Sac a dos", "Accessoires", 100, 80, "Un sac a dos confortable et spacieux."},
-    {1, "Ordinateur Portable", "Electronique", 500, 50, "Un ordinateur portable performant pour le travail et les jeux."},
-    {2, "Smartphone", "Electronique", 300, 30, "Un smartphone moderne avec un bon appareil photo."},
-    {3, "Livre", "Education", 20, 150, "Un livre intEressant pour apprendre la programmation."},
+    {1, "Sac a dos", "Accessoires", 100, 80, "Un sac a dos confortable et spacieux."},
+    {2, "Ordinateur Portable", "Electronique", 500, 50, "Un ordinateur portable performant pour le travail et les jeux."},
+    {3, "Smartphone", "Electronique", 300, 30, "Un smartphone moderne avec un bon appareil photo."},
+    {4, "Livre", "Education", 20, 150, "Un livre intEressant pour apprendre la programmation."},
     {5, "Casque Audio", "Electronique", 100, 12, "Un casque audio de haute qualite."},
 };
 
@@ -219,14 +219,14 @@ void Solde()
     {
         do
         {
-            printf("_____________________________________________________________");
-            printf("\n===  GESTION DU SOLDE VIRTUEL ===\n");
+         
+            printf("\n===========  GESTION DU SOLDE VIRTUEL ============\n");
             printf("1. Consulter le solde\n");
             printf("2. Deposer de l argent\n");
             printf("0. Fermez cette page \n");
             printf("Votre choix : ");
             scanf("%d", &choix);
-
+   printf("_____________________________________________________________\n");
             switch (choix)
             {
             case 1:
@@ -505,7 +505,7 @@ void Statistiques()
         return;
     }
 
-    printf("\n===== STATISTIQUES DU CLIENT =====\n");
+    printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~ STATISTIQUES DU CLIENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("Nombre total d achats effectues : %d\n", nbAchats);
     printf("Solde actuel : %.2f DH\n", client.solde);
 }
