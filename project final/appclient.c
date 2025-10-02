@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-
+#include <strings.h>
+#define MAX_PRODUITS 5
 typedef struct {
     char idClient[10];
     char nom[50];
@@ -17,29 +18,29 @@ typedef struct {
     char categorie[30];
     float prix;
     int stock;
-    char description[101];
+    char description[100];
 } Produit;
-Produit catalog[10] = {
+Produit catalog[MAX_PRODUITS] = {
     {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
     {1, "Ordinateur Portable", "Electronique",500 , 5, "Un ordinateur portable performant pour le travail et les jeux."},
-    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
-    {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
     {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
     {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
     {1, "Ordinateur Portable", "Electronique", 500, 5, "Un ordinateur portable performant pour le travail et les jeux."},
 };
 void Profil();
     void Creation();
+    void emailId();
     void AfficherProfil();
     void Modification();
 void Solde();
     void afficherSolde();
     void deposerArgent();
 void consultationProduits();
+    void RecherchNom();
+    void RecherchCategorie();
     void afficherDetailsProduit();
     void afficherCatalogue();
-
-void Effectuer(){};
+void Effectuer();
 
 void Statistiques(){};
 
@@ -106,35 +107,35 @@ switch (choix) {
             default:
                 printf("Choix invalide.\n");
         }
-
     } while (choix != 0);
 }
 void Creation() {
-    char nome[50];
-    
     printf("\n              LA CREATION DE COMPTE         \n ");
     client.solde = 0.0;
     printf("\nEntrez le nom : ");
     scanf(" %[^\n]", client.nom);
     printf("Entrez le prenom : ");
     scanf("%s", client.prenom);
+   emailId();
+    cmpClient = 1;
+    printf("Compte cree avec succes \n");
+}
+void emailId(){
     int j=0;
+    char nome[50];
     for(int i=0;client.nom[i]!='\0';i++){
-        if(client.nom[i]!=' ')
-         nome[j++]=client.nom[i];
+        if(client.nom[i]!=' '){
+        nome[j++]=client.nom[i];
 
-    } 
+    }}
     nome[j]='\0';
-    
+
     strcpy(client.email,nome);
     strcat(client.email, ".");
     strcat(client.email, client.prenom);
     strcat(client.email, "@gmail.com");
-    sprintf(client.idClient, "%c.%c", client.prenom[0], client.nom[0]);
+    sprintf(client.idClient, "%c.%c", client.prenom[0], client.nom[0]);}
 
-    cmpClient = 1;
-    printf("Compte cree avec succes \n");
-}
 void AfficherProfil() {
     printf("\n===========================================\n");
     printf("                \\  LE PROFIL  //          \n");
@@ -146,27 +147,26 @@ void AfficherProfil() {
 }
 void Modification() {
     printf("\n              LA MODIFICATION DE COMPT       \n ");
-    char nome[50], prenome[50];
     printf("\nEntrez le nouveau nom : ");
-    scanf(" %[^\n]", nome);
+    scanf(" %[^\n]",client.nom);
     printf("Entrez le nouveau prenom : ");
-    scanf("%s", prenome);
+    scanf("%s", client.prenom);
     printf("Profil mis a jour avec succes \n");
+    emailId();
 }
-void Solde(){ 
-    int choix ; 
+void Solde(){
+    int choix ;
      if (cmpClient== 0){
         printf("Veuillez creer un compte d abord.\n");
-    } else { 
-    do {
+    } else {
+do {
         printf("\n===  GESTION DU SOLDE VIRTUEL ===\n");
         printf("1. Consulter le solde\n");
         printf("2. Deposer de l argent\n");
         printf("0. Fermez cette page \n");
         printf("Votre choix : ");
         scanf("%d", &choix);
-
-        switch (choix) {
+switch (choix) {
             case 1:
                 afficherSolde();
             break;
@@ -205,34 +205,40 @@ void deposerArgent() {
 }
 void consultationProduits(){
     int choix;
-    do {
-        afficherCatalogue();
-        printf("\nEntrez le numero du produit pour voir les details (0 pour retourner au menu): ");
-        scanf("%d", &choix);
-
-        if (choix == 0) {
-            printf("Retour au menu principal.\n");
-            break;
-        }
-        afficherDetailsProduit(choix);
-
+    afficherCatalogue();
+do{
+        printf("________________________________________________________________");
+printf("\n 1 :  details un produit ");
+printf("\n 2 :  recherche un produit par nom" );
+printf("\n 3 :  recherche un produit par categorie" );
+printf("\n 4 :  tri des produits par pri ou alphabe");
+printf("\n 5 :  Retour au menu principal.\n");
+switch(choix){
+          case 1 :afficherDetailsProduit();break;
+          case 2 :RecherchNom();break;
+          case 3 :RecherchCategorie();break;
+ }
         printf("\nVoulez-vous consulter un autre produit ? (1: Oui, 0: Non): ");
         scanf("%d", &choix);
+ } while (choix != 0);
 
-    } while (choix == 1);
+
 }
 
 void afficherCatalogue() {
+
     printf("\n===== Catalogue des produits =====\n");
-    for (int i = 0; i < 10 ; i++) {
+    for (int i = 0; i <MAX_PRODUITS; i++){
         printf("%d. %s - %.2f MAD - Stock: %d\n", catalog[i].idProduit, catalog[i].nom, catalog[i].prix, catalog[i].stock);
     }
 }
-
-void afficherDetailsProduit() {
+void afficherDetailsProduit(){
     int trouve = 0;
-    for (int i = 0; i < 10 ; i++) {
-        if (catalog[i].idProduit == 0) {
+    int id ;
+    printf("entre le id dun produit");
+    scanf("%d",&id);
+    for (int i = 0; i < MAX_PRODUITS; i++) {
+        if (catalog[i].idProduit == id) {
             trouve = 1;
             printf("\n----------- Details du produit -----------\n");
             printf("Nom               : %s\n", catalog[i].nom);
@@ -241,11 +247,66 @@ void afficherDetailsProduit() {
             printf("Stock             : %d\n", catalog[i].stock);
             printf("Description       : %s\n", catalog[i].description);
             break;
-        }
-    }
-    if (trouve==0) {
+}}
+    if(trouve==0) {
         printf("Produit introuvable.\n");
+}}
+void RecherchNom(){
+    char nomProduit[20];
+printf("entre le nome de produit");
+scanf("%s",&nomProduit);
+int trouver=0;
+for(int i=0;i<MAX_PRODUITS;i++){
+ if(strscasecmp(catalog[i].nom,nomProduit)==0){
+    trouver=1;
+            printf("\n----------- Details du produit -----------\n");
+            printf("Nom               : %s\n", catalog[i].nom);
+            printf("Categorie         : %s\n", catalog[i].categorie);
+            printf("Prix              : %.2f MAD\n", catalog[i].prix);
+            printf("Stock             : %d\n", catalog[i].stock);
+            printf("Description       : %s\n", catalog[i].description);
+
     }
+    if(trouver==0){
+    printf(" pas d produit ave");
+    }
+}}
+void RecherchCategorie(){
+    char nomCategorie[20];
+printf("entre le categorie");
+scanf("%s",&nomCategorie);
+int trouver=0;
+for(int i=0;i<MAX_PRODUITS;i++){
+    if(strscasecmp(catalog[i].categorie,nomCategorie)==0){
+    trouver=1;
+            printf("\n----------- Details du produit -----------\n");
+            printf("Nom               : %s\n", catalog[i].nom);
+            printf("Categorie         : %s\n", catalog[i].categorie);
+            printf("Prix              : %.2f MAD\n", catalog[i].prix);
+            printf("Stock             : %d\n", catalog[i].stock);
+            printf("Description       : %s\n", catalog[i].description);
+
+    }
+    if(trouver==0){
+    printf(" pas d produit ave");
+    }
+}}
+
+
+
+void Effectuer(){
+    if (cmpClient == 0) {
+ printf("Le compte n existe pas. Veuillez en creer un d abord.\n");
+ } else {
+     consultationProduits();
+
+
+ }
+
+
+
+
+
 }
 
 
